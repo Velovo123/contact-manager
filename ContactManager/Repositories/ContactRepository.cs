@@ -13,13 +13,14 @@ namespace ContactManager.Repositories
         {
             _context = context;
         }
+       
 
-        public async Task<List<Contact>> GetAllContactsAsync()
+        async Task<List<Contact>> IContactRepository.GetAllContactsAsync()
         {
             return await _context.Contacts.ToListAsync();
         }
 
-        public async Task<Contact> GetContactByIdAsync(int id)
+        async Task<Contact> IContactRepository.GetContactByIdAsync(int id)
         {
             return await _context.Contacts.FindAsync(id);
         }
