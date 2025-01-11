@@ -1,4 +1,6 @@
-﻿namespace ContactManager.Repositories.IRepositories
+﻿using ContactManager.Models;
+
+namespace ContactManager.Repositories.IRepositories
 {
     public interface IContactRepository
     {

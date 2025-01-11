@@ -32,5 +32,9 @@ namespace ContactManager.Models
             Salary = salary;
         }
 
+        public Contact()
+        {
+            
+        }
     }
 }

@@ -1,16 +1,20 @@
 ﻿using ContactManager.Models;
 using ContactManager.Repositories.IRepositories;
 using ContactManager.Services.IServices;
+using CsvHelper.Configuration;
+using Microsoft.AspNetCore.Http;
 
 namespace ContactManager.Services
 {
     public class ContactService : IContactService
     {
         private readonly IContactRepository _repository;
+        private readonly ICsvParsingService _csvParsingService;
 
-        public ContactService(IContactRepository repository)
+        public ContactService(IContactRepository repository, ICsvParsingService csvParsingService)
         {
             _repository = repository;
+            _csvParsingService = csvParsingService;
         }
 
         public async Task<List<Contact>> GetAllContactsAsync()
@@ -23,14 +27,22 @@ namespace ContactManager.Services
             return await _repository.GetContactByIdAsync(id);
         }
 
-        public async Task AddContactAsync(Contact contact)
+        public async Task AddContactsAsync(IFormFile csvFile)
         {
-            if (string.IsNullOrWhiteSpace(contact.Name) || contact.Salary < 0)
-            {
-                throw new ArgumentException("Invalid contact data.");
-            }
+            if (csvFile == null || csvFile.Length == 0)
+                throw new ArgumentException("CSV file is empty or invalid.");
 
-            await _repository.AddContactAsync(contact);
+            var contacts = await _csvParsingService.ParseCsvFileAsync(csvFile);
+
+            foreach (var contact in contacts)
+            {
+                if (string.IsNullOrWhiteSpace(contact.Name) || contact.Salary < 0)
+                {
+                    continue;
+                }
+
+                await _repository.AddContactAsync(contact);
+            }
         }
 
         public async Task UpdateContactAsync(Contact contact)
