@@ -1,4 +1,7 @@
 ﻿using ContactManager.Models;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ContactManager.Services.IServices
 {
@@ -6,7 +9,7 @@ namespace ContactManager.Services.IServices
     {
         Task<List<Contact>> GetAllContactsAsync();
         Task<Contact> GetContactByIdAsync(int id);
-        Task AddContactAsync(Contact contact);
+        Task AddContactsAsync(IFormFile csvFile); 
         Task UpdateContactAsync(Contact contact);
         Task DeleteContactAsync(int id);
     }
