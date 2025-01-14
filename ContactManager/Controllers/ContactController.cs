@@ -45,13 +45,11 @@ namespace ContactManager.Controllers
             return Ok(new { message = "Contact updated successfully." });
         }
 
-        [HttpPost("Delete/{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteContact(int id)
         {
-            await _contactService.DeleteContactAsync(id);
-            TempData["Success"] = "Contact deleted successfully.";
-
-            return RedirectToAction("Index");
+            await _contactService.DeleteContactAsync(id); 
+            return Ok(new { message = "Contact deleted successfully." });
         }
     }
 }
