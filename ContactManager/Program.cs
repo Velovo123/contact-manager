@@ -1,7 +1,23 @@
+using ContactManager.Data;
+using ContactManager.Repositories.IRepositories;
+using ContactManager.Repositories;
+using Microsoft.EntityFrameworkCore;
+using ContactManager.Services.IServices;
+using ContactManager.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ContactDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddTransient<ICsvParsingService, CsvParsingService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 var app = builder.Build();
 
