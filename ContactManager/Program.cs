@@ -2,6 +2,8 @@ using ContactManager.Data;
 using ContactManager.Repositories.IRepositories;
 using ContactManager.Repositories;
 using Microsoft.EntityFrameworkCore;
+using ContactManager.Services.IServices;
+using ContactManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<ContactDbContext>(options =>
 
 
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddTransient<ICsvParsingService, CsvParsingService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 var app = builder.Build();
 

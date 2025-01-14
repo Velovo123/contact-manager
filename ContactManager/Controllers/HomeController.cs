@@ -15,7 +15,7 @@ namespace ContactManager.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Contact");
         }
 
         public IActionResult Privacy()

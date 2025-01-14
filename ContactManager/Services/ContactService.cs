@@ -1,8 +1,6 @@
 ﻿using ContactManager.Models;
 using ContactManager.Repositories.IRepositories;
 using ContactManager.Services.IServices;
-using CsvHelper.Configuration;
-using Microsoft.AspNetCore.Http;
 
 namespace ContactManager.Services
 {
