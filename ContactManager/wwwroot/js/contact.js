@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Inline Edit and Save functionality
+    // Inline Edit, Save, and Delete functionality
     table.addEventListener("click", async (e) => {
         const row = e.target.closest("tr");
 
@@ -142,5 +142,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("An unknown error occurred.");
             }
         }
+
+        if (e.target.classList.contains("delete-btn")) {
+            const id = row.dataset.id;
+            const confirmDelete = confirm("Are you sure you want to delete this contact?");
+            if (!confirmDelete) return;
+
+            try {
+                const response = await fetch(`/Contact/Delete/${id}`, {
+                    method: "DELETE",
+                });
+
+                if (response.ok) {
+                    row.remove(); 
+                    alert("Contact deleted successfully.");
+                } else {
+                    const errorData = await response.json();
+                    alert(`Failed to delete contact: ${errorData.error || "Unknown error"}`);
+                }
+            } catch (error) {
+                alert("An error occurred while deleting the contact.");
+            }
+        }
+
     });
 });
