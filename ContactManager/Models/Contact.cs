@@ -7,15 +7,18 @@ namespace ContactManager.Models
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(100)]
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(100, ErrorMessage = "Name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Date of Birth is required.")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
         public bool Married { get; set; }
 
-        [Required, Phone]
+        [Required(ErrorMessage = "Phone number is required.")]
+        [Phone(ErrorMessage = "Invalid phone number format.")]
         public string Phone { get; set; }
 
         [Range(0, double.MaxValue)]
